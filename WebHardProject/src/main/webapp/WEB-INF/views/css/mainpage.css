@@ -1,0 +1,119 @@
+@CHARSET "EUC-KR";
+
+
+    #topMenu {
+            height: 30px;  
+            width: 850px;  
+    }
+    #topMenu ul {        
+        list-style-type: none; 
+        margin: 0px;          
+        padding: 0px;          
+    }
+    #topMenu ul li {           
+        color: white;            
+        background-color: #2d2d2d; 
+        float: left;               
+        line-height: 30px;         
+        vertical-align: middle;     
+        text-align: center;       
+        position: relative;        
+    }
+    .menuLink, .submenuLink {         
+        text-decoration:none;             
+        display: block;                 
+        width: 150px;                      
+        font-size: 12px;                
+        font-weight: bold;                
+       
+    }
+    .menuLink {    
+        color: white;
+    }
+    .topMenuLi:hover .menuLink {  
+        color: red;                
+        background-color: #4d4d4d; 
+    }
+    .submenuLink {          
+        color: #2d2d2d;             
+        background-color: white;   
+        border: solid 1px black;  
+        margin-top: -1px;          
+    }
+    .longLink {    
+        width: 190px;  
+    }
+    .submenu {              
+        position: absolute;    
+        height: 0px;           
+        overflow: hidden;     
+        transition: height .2s; 
+     
+    }
+    .topMenuLi:hover .submenu {
+        height: 93px;           
+    }
+    .submenuLink:hover {       
+        color: red;               
+        background-color: #dddddd;  
+    }
+  	#hrbar{
+  	width: 800px;
+  	float: left;
+  	
+  	}
+  	
+   #ctable {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+   	
+}
+
+ #ctable td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+#ctable tr:nth-child(even) {
+    background-color: #dddddd;
+}
+#fieldset{
+	width: 100px;
+}
+#list{
+	list-style: none;
+}
+#wrap{
+	width: 800px;
+	margin:0 auto 0 auto;
+	
+	
+}
+#header{
+	width: 800px;
+	height: 150;
+}
+#navbar{
+	width: 800px;
+	height: 70px;
+}
+#side{
+	float: left;
+	width: 200px;
+	height: 500px;	
+}
+#content{
+	float:left;
+	width: 600px;
+	height: 500px; 	
+}
+#footer{
+	clear: left;
+	width: 800px;
+	height:60px;
+	
+
+}
+	

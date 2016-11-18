@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+	PUBLIC "-//mybatis.org//DTD SQL Map Config 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="com.usnschool.mapper.WebHardMapper">
+	<insert id="fileUpLoad">
+		insert into tbl_boardfile (bno, path, capacity, filename, point) values (#{bno}, #{path}, #{capacity}, #{filename}, #{point})
+	</insert>
+	
+	<select id="login" resultType="UserVO">
+		select * from tbl_user where id=#{id} and password =#{password}
+	</select>
+	
+	<insert id="insertboard">
+		insert into tbl_board (title, content, point, writer, genre) values (#{title}, #{content}, #{point}, #{writer}, #{genre})
+	</insert>
+	
+	<select id="getlastbno" resultType ="java.lang.String">
+		select bno from tbl_board order by bno desc limit 1
+	</select>
+	
+	<insert id="imgupload">
+		insert into tbl_boardimg (bno, path, filename) values(#{bno}, #{path}, #{filename})
+	</insert>
+	
+	<select id="idoverlapcheck" resultType="java.lang.String">
+		select id from tbl_user where id = #{id}
+	</select>
+	
+	<insert id="register">
+		insert into tbl_user (id, password, email) values (#{id}, #{password}, #{email})
+	</insert>
+	
+	<select id="listAll" resultType="com.usnschool.domain.BoardVO">
+		<![CDATA[
+			select 
+				bno, writer, title, writer, content, regdate , point , genre
+			from
+				tbl_board
+			where bno > 0
+			order by bno desc, regdate desc
+		]]>
+	</select>
+	
+	<select id="listCriteria" resultType="BoardVO">
+	<![CDATA[
+	select 
+		bno, writer, title, writer, content,regdate,point,genre 
+	from
+		tbl_board 
+	where bno>0 ]]>
+	<if test="genre != null"> and genre = #{genre}</if>
+	<if test="field == 'title'.toString()"> and title like CONCAT('%', #{searchword}, '%')</if>
+	<if test="field == 'writer'.toString()"> and writer like CONCAT('%', #{searchword}, '%')</if>
+	<![CDATA[
+	order by bno desc, regdate desc
+	limit #{pageStart}, #{perPageNum} 
+	]]>
+	</select>
+	
+	<select id="countPaging" resultType="int">
+	<![CDATA[
+	select 
+		 count(bno)
+	from	 
+		tbl_board
+	where
+		bno>0]]> 
+		<if test="genre != null"> and genre = #{genre}</if>
+	<if test="field == 'title'.toString()"> and title like CONCAT('%', #{searchword}, '%')</if>
+	<if test="field == 'writer'.toString()"> and writer like CONCAT('%', #{searchword}, '%')</if>
+	</select>
+	
+	<select id="getboardvo" resultType="BoardVO">
+		select * from tbl_board where bno = #{bno}
+	</select>
+	
+	<select id="getboardfilevo" resultType="BoardFileVO">
+		select * from tbl_boardfile where bno = #{bno}
+	</select>
+	
+	<select id="getboardimgvo" resultType="BoardImgVO">
+		select * from tbl_boardimg where bno = #{bno}
+	</select>
+	
+	<select id="getfilepath" resultType="String">
+		select path from tbl_boardfile where bfno = #{bfno}	
+	</select>
+	
+	<update id="increasepoint">
+		update tbl_user set point = point + #{point} where id = #{writer}
+	</update>
+	
+	<update id="decreasepoint">
+		update tbl_user set point = point - #{point} where id = #{loginid}
+	</update>
+	
+	<insert id="registerdowninfo">
+		insert into tbl_userdownload (bfno, userid, bno, filename) values(#{bfno}, #{loginid}, #{bno}, #{filename})
+	</insert>
+	
+	<select id="getuserdownload" resultType="UserDownloadVO">
+		select * from tbl_userdownload where userid = #{loginid} and bno = #{bno}
+	</select>
+	
+	<select id="getboardvobyid" resultType = "UserVO">
+		select * from tbl_user where id = #{id}
+	</select>
+	
+	<update id="changeuserinfo">
+		<![CDATA[update tbl_user set  email = #{email} ,  password = #{password} where id = #{id}]]>
+	</update>
+	
+	<select id="checkid" resultType="UserVO">
+		select * from tbl_user where id = #{id} and password = #{password}
+	</select>
+	
+	<delete id="deleteid">
+		delete from tbl_user where id = #{id}
+	</delete>
+	
+	<update id="changegrade">
+		update tbl_user set grade = 'deleted' where id = #{id}
+	</update>
+	
+	<select id="getuserdownlist" resultType="UserDownloadVO">
+		select * from tbl_userdownload where userid = #{id} order by regdate desc
+	</select>
+	
+	<delete id="deleteboard">
+		delete from tbl_board where bno = #{bno}
+	</delete>	
+	
+	<delete id="deletefile">
+		delete from tbl_boardfile where bno = #{bno}
+	</delete>
+	
+	<delete id="deleteimg">
+		delete from tbl_boardimg where bno = #{bno}
+	</delete>
+	
+	<!-- ///////////////////////////////////////////////////////////////////////////////////////////////////              -->
+	<insert id="insertcboard">
+		insert into tbl_comunityboard (title,writer,content,count) values (#{title},#{writer},#{content},#{count})
+	</insert>
+	
+	<select id="read" resultType="CommunityVO">
+		select
+			 cbno,title,writer,regdate,content,count
+		from
+			tbl_comunityboard
+		where cbno =#{cbno}		
+	</select>
+	
+	<update id="update">
+		update tbl_comunityboard set title =#{title},writer=#{writer}, content=#{content}
+		where cbno=#{cbno}
+	</update>
+	
+	<delete id="delete">
+	delete from tbl_comunityboard where cbno =#{cbno} 
+	</delete>
+	
+	<select id="communityAll" resultType="com.usnschool.domain.CommunityVO">
+		<![CDATA[
+			select 
+			cbno, title, writer, regdate, content, count
+			from
+				tbl_comunityboard
+			where cbno > 0
+			order by cbno desc, regdate desc
+		]]>
+	</select>
+	
+	
+	<insert id="rplyInsert">
+		insert into tbl_comunityboardreply (cbno,writer,content,regdate)
+		values (${cbno},#{writer},#{content},#{regdate})  
+	</insert>
+	
+	<update id="rplyUpdate">
+		update tbl_comunityboardreply set content =#{content} where cbrno=#{cbrno} 
+	</update>
+	
+	<delete id="rplyDelete">
+		delete from tbl_comunityboardreply where cbrno =#{cbrno} 
+	</delete>
+	
+	<update id="increasecount">
+		update tbl_comunityboard set count = count + 1 where cbno = #{cbno}
+	</update>
+	
+	<select id="clistcountcriteria" resultType="Integer">
+		select count(*) from tbl_comunityboard
+	</select>
+	
+	<select id="communitylistcri" resultType="CommunityVO">
+		<![CDATA[select * from tbl_comunityboard where cbno > 0  
+		]]>
+	<if test="genre != null"> and genre = #{genre}</if>
+	<if test="field == 'title'.toString()"> and title like CONCAT('%', #{searchword}, '%')</if>
+	<if test="field == 'name'.toString()"> and writer like CONCAT('%', #{searchword}, '%')</if>
+	<![CDATA[
+		 order by regdate desc limit #{pageStart}, #{perPageNum} 
+		]]>
+	</select>
+	
+	<insert id="registerreply">
+		insert into tbl_comunityboardreply (cbno, writer, content) values (#{cbno}, #{writer}, #{content})
+	</insert>
+	
+	<select id="rlistcountcriteria" resultType="Integer">
+		select count(*) from tbl_comunityboardreply
+	</select>
+	
+	<select id="readReply" resultType="CommunityReplyVO">
+		select * from tbl_comunityboardreply where cbrno > 0 order by regdate desc limit #{pageStart}, #{perPageNum}
+	</select>
+	
+</mapper>
