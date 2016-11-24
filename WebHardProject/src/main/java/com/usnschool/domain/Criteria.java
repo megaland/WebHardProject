@@ -6,6 +6,7 @@ public class Criteria {
 	private String genre;
 	private String searchword;
 	private String field;
+	private int cbno;
 	public Criteria() {
 
 		this.page = 1;
@@ -56,6 +57,12 @@ public class Criteria {
 	}
 	public void setField(String field) {
 		this.field = field;
+	}
+	public int getCbno() {
+		return cbno;
+	}
+	public void setCbno(int cbno) {
+		this.cbno = cbno;
 	}
 	
 }

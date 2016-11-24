@@ -211,11 +211,11 @@
 	</insert>
 	
 	<select id="rlistcountcriteria" resultType="Integer">
-		select count(*) from tbl_comunityboardreply
+		select count(*) from tbl_comunityboardreply where cbno = #{cbno}
 	</select>
 	
 	<select id="readReply" resultType="CommunityReplyVO">
-		select * from tbl_comunityboardreply where cbrno > 0 order by regdate desc limit #{pageStart}, #{perPageNum}
+		select * from tbl_comunityboardreply where cbrno > 0 and cbno = #{cbno} order by regdate desc limit #{pageStart}, #{perPageNum}
 	</select>
 	
 </mapper>

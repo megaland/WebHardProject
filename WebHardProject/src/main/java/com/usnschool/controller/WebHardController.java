@@ -433,6 +433,7 @@ public class WebHardController {
 		PageMaker pageMaker = new PageMaker();
 		pageMaker.setCri(cri);
 		pageMaker.setTotalCount(service.rlistCountCriteria(cri));
+		cri.setCbno(cbno);
 		if(cri.getPage() != 1){
 			service.increaseCount(cbno);
 		}
